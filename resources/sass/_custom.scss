@@ -1,0 +1,229 @@
+
+html {
+   box-sizing:border-box;
+    height: 100%;
+}
+*,
+*:after,
+*:before {
+  box-sizing:inherit;
+}
+body {
+    font-family: $fuente_principal;
+    height: 100%;
+    background-color: $gris;
+}
+i {
+    font-size: 1.2rem;
+    color: $blanco;
+}
+/** Contenido **/
+.pagina {
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+.header {
+    width: 100%;
+    .nombre-sitio {
+        width: 19rem;
+        background-color: $secundario;
+        h1 {
+            color: $blanco;
+        }
+    }
+    .barra {
+        background-color: $primario;
+        .name{
+            color: white;
+        }
+    }
+}
+.menu-izquierdo {
+    .fa-arrow-right {
+        display: none;
+    }
+}
+.menu-derecho{
+    .caja {
+        &:hover {
+            background-color: darken($primario, 5);
+        }
+    }
+    a {
+        color: $blanco;
+        text-decoration: none;
+        position: relative;
+    }
+}
+.no-menu.pagina {
+    .sidebar {
+        margin-left: -19rem;
+    }
+}
+.sidebar {
+    min-width: 19rem;
+    transition: margin-left .3s ease;
+    background-color: $grisOscuro;
+    color: $blanco;
+    .usuario i{
+        font-size: 4.2rem;
+    }
+    .buscador {
+        input[type="text"] {
+            border-radius: 10px;
+            height: 2.8rem;
+        }
+    }
+}
+.menu-admin {
+    h2 {
+        font-size: 1.3rem;
+    }
+    .menu{
+        list-style: none;
+        > li {
+            padding: .5rem;
+            &:hover {
+                ul {
+                    display: block;
+                }
+            }
+            a {
+                padding: .5rem;
+                color: $blanco;
+                text-decoration: none;
+                transition: padding-left .3s ease;
+                &:hover {
+                    border-radius: 2px;
+                    background-color: $primario;
+                    padding-left: 2rem;
+                    cursor: pointer;
+                }
+            }
+            ul {
+                display: none;
+                list-style: none;
+                background-color: darken($grisOscuro, 3);
+            }
+        }
+    }
+}
+.contenido{
+    width: 100%;
+    overflow: hidden;
+    tbody{
+        th,td{
+           vertical-align: middle;
+           padding: .9rem;
+        }
+        a{
+            background-color: $primario;
+            border: none;
+            &:hover{
+                background-color: darken($color: $primario, $amount: 8);
+            }
+        }
+    }
+}
+.pagination{
+    margin-bottom: 0;
+}
+.paginate{
+    .page-link{
+        color: $primario;
+    }
+    .page-item.active .page-link{
+        background-color: $primario;
+        border:none;
+    }
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type="number"] {
+-moz-appearance: textfield;
+}
+.info-eliminar-chofer{
+    font-size: .6rem;
+}
+.nom-rojo{
+    color: red;
+}
+
+.info-contenido{
+    h1{
+        font-size: 2.5rem;
+    }
+    .info-contacto{
+        h4{
+            font-size: 1rem;
+        }
+        p{
+            margin: 0;
+            font-size: .9rem;
+        }
+    }
+}
+
+.btn-actividades{
+    font-size: .98rem;
+    .fa-caret-square-down{
+        font-size: .8rem;
+    }
+    .flecha{
+        transition: all .1s linear;
+        transform: rotate(0deg);
+    }
+    .flecha-giro{
+        transform: rotate(-180deg);
+    }
+}
+.actividad{
+    transform-origin: top;
+    transform: scale(1, 0);
+    transition:  all .13s ease-in;
+}
+.mostrar-actividad{
+
+    transform: scale(1, 1);
+}
+
+.search{
+    width: 350px;
+    i{
+        color: $grisOscuro;
+    }
+}
+.container{
+    position: relative;
+}
+.btn-volver{
+    position: absolute;
+    bottom: 1px;
+    background-color: $primario;
+    border: none;
+    &:hover {
+        background-color: darken($primario, 5);
+    }
+}
+
+//error
+.error{
+    display: none;
+}
+
+.btn-reporte{
+    background-color: $primario;
+    &:hover {
+        background-color: darken($primario, 5);
+    }
+}
+
+.datos-carrera{
+    font-size: .9rem;
+}
+
+
