@@ -54,7 +54,7 @@
                         </form>
                    </div>
                    <div class="col-12 col-md-3 p-0 text-center text-md-right my-5 my-md-0">
-                        <a href="{{route('generarPdfCarreras')}}" class="btn btn-primary px-3 py-1 my-2 btn-reporte">Generar PDF</a>
+                        <a href="{{route('generarPdfCarreras', $carrerasItem)}}" class="btn btn-primary px-3 py-1 my-2 btn-reporte">Generar PDF</a>
                         <a href="{{route('exportExcel', $carrerasItem)}}" class="btn btn-primary px-3 py-1 btn-reporte">Exportar excel</a>
                     </div>
                 </div>

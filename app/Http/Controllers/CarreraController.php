@@ -95,14 +95,14 @@ class CarreraController extends Controller
 
     public function generarPdf($id)
     {
-        $carreras = Carrera::join('clientes', 'cliente_id', '=',  'clientes.id')
+        $carrera = Carrera::join('clientes', 'cliente_id', '=',  'clientes.id')
             ->join('chofers', 'chofer_id', '=', 'chofers.id')
             ->select('carreras.*','clientes.nombre as nombre_cliente', 'clientes.apellido as    apellido_cliente', 'chofers.nombre as nombre_chofer', 'chofers.apellido as apellido_chofer')
             ->orderBy('id','desc')
             ->where('carreras.id', $id)
             ->get();
 
-        $pdf = PDF::loadView('layouts.CarrerasAllPdf', compact('carreras'));
+        $pdf = PDF::loadView('layouts.CarreraPdf', compact('carrera'));
         return $pdf->stream();
     }
 

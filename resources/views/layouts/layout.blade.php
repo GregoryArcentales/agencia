@@ -130,12 +130,12 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="py-2 px-3">
+                           {{--  <li class="py-2 px-3">
                                 <a href="#">
                                     <i class="fas fa-pencil-alt mx-1"></i>
                                     Editar Perfil
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
             </div>

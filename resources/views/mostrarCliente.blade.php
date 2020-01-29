@@ -33,20 +33,20 @@
                     <!--Botón para ver las ACTIVIDADES-->
                     <div class="container-buscar">
                         <form class="form-inline search d-block d-md-none d-flex">
-                          <input class="form-control form-control-sm w-75 search-i" type="text" placeholder="Lugar, nombre de cliente" name="buscarCarrera" aria-label="Search">
+                          <input class="form-control form-control-sm w-75 search-i" type="text" placeholder="Lugar, nombre de chofer" name="buscarCarrera" aria-label="Search">
                           <i class="fas fa-search ml-3" aria-hidden="true"></i>
                         </form>
                       </div>
                       <div class="row">
                         <div class="col-8 col-sm-4">
-                          <button class="btn btn-secondary my-3 btn-actividades p-2">Ultimas carreras
+                          <button class="btn btn-secondary my-2 btn-actividades p-2">Ultimas carreras
                             <div class="d-inline-flex justify-content-center align-items-center flecha"><i class="fas fa-caret-square-down"></i></div>
                           </button>
                         </div>
                         <div class="col-4 col-sm-8">
                          <div class="h-100 d-flex align-items-center">
                           <form class="form-inline search d-none d-md-block">
-                            <input class="form-control form-control-sm mr-3 w-75 search-i" type="text" placeholder="Lugar, nombre de cliente" name="buscarCarrera" aria-label="Search">
+                            <input class="form-control form-control-sm mr-3 w-75 search-i" type="text" placeholder="Lugar, nombre de chofer" name="buscarCarrera" aria-label="Search">
                             <i class="fas fa-search" aria-hidden="true"></i>
                           </form>
 

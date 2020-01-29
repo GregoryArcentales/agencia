@@ -36,7 +36,7 @@
                   </div>
                   <div class="row">
                     <div class="col-8 col-sm-4">
-                      <button class="btn btn-secondary my-3 btn-actividades p-2">Ultimas carreras
+                      <button class="btn btn-secondary my-2 btn-actividades p-2">Ultimas carreras
                         <div class="d-inline-flex justify-content-center align-items-center flecha"><i class="fas fa-caret-square-down"></i></div>
                       </button>
                     </div>
