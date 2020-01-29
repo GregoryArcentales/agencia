@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Carrera;
 use App\Chofer;
 use App\Cliente;
+use App\Gasto;
 use App\Http\Requests\FormularioClienteRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ClienteCarrerasExport;
+
 
 class ClienteController extends Controller
 {
@@ -26,10 +30,10 @@ class ClienteController extends Controller
     {
             $clientes = Cliente::buscadorCliente($request->get('buscarTexto'))
                 ->orderBy('id','desc')
-                ->paginate(5);
+                ->paginate(6);
             $chofer = Chofer::where('baja',0)->get();
-            return view('cliente',
-                ["clientes"=>$clientes,
+            return view('cliente',[
+                "clientes"=>$clientes,
                 "choferes"=>$chofer
                 ]);
     }
@@ -71,7 +75,7 @@ class ClienteController extends Controller
         $cliente = Cliente::findOrFail($id);
         $carreras = Carrera::join('clientes', 'cliente_id', '=', 'clientes.id')
             ->join('chofers', 'chofer_id', '=', 'chofers.id')
-            ->select('carreras.*','clientes.nombre as nombre_cliente','chofers.nombre as nombre_chofer')
+            ->select('carreras.*','clientes.nombre as nombre_cliente', 'clientes.apellido as    apellido_cliente', 'chofers.nombre as nombre_chofer', 'chofers.apellido as apellido_chofer', 'chofers.baja as chofer_baja')
             ->buscadorCarreraCliente($request->get('buscarCarrera'))
             ->idCliente($cliente->id)
             ->orderBy('id','desc')
@@ -81,6 +85,24 @@ class ClienteController extends Controller
             'carreras' => $carreras,
             'cliente' => $cliente
         ]);
+    }
+
+    public function generarPdf($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        $carreras = Carrera::join('clientes', 'cliente_id', '=', 'clientes.id')
+            ->join('chofers', 'chofer_id', '=', 'chofers.id')
+            ->select('carreras.*','clientes.nombre as nombre_cliente', 'clientes.apellido as apellido_cliente', 'chofers.nombre as nombre_chofer', 'chofers.apellido as apellido_chofer', 'chofers.baja as chofer_baja')
+            ->idCliente($id)
+            ->orderBy('id','desc')
+            ->get();
+        $pdf = PDF::loadView('layouts.clienteCarrerasPdf', compact(['carreras', 'cliente']));
+        return $pdf->stream();
+    }
+
+    public function export($id)
+    {
+        return Excel::download(new ClienteCarrerasExport($id), 'cliente-carreras.xlsx');
     }
 
     /**
@@ -122,9 +144,9 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         $cliente = Cliente::findOrFail($id);
-        DB::table('carreras')
-            ->join('clientes', 'carreras.cliente_id', '=', 'clientes.id')
-            ->join('chofers', 'carreras.chofer_id', '=', 'chofers.id')
+        Carrera::join('clientes', 'cliente_id', '=', 'clientes.id')
+            ->join('chofers', 'chofer_id', '=', 'chofers.id')
+            ->select('carreras.*')
             ->where('clientes.id',$cliente->id)
             ->delete();
         $cliente->delete();

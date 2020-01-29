@@ -25,7 +25,12 @@ class Carrera extends Model
     {
         if ($nombre != '') {
             return $query->where('clientes.nombre','LIKE','%'.$nombre.'%')
-            ->orWhere('chofers.nombre','LIKE','%'.$nombre.'%');
+            ->orWhere('chofers.nombre','LIKE','%'.$nombre.'%')
+            ->orWhere('chofers.apellido','LIKE','%'.$nombre.'%')
+            ->orWhere('clientes.nombre','LIKE','%'.$nombre.'%')
+            ->orWhere('clientes.apellido','LIKE','%'.$nombre.'%')
+            ->orWhere('dir_salida','LIKE','%'.$nombre.'%')
+            ->orWhere('dir_destino','LIKE','%'.$nombre.'%');
         }
     }
 
@@ -37,7 +42,8 @@ class Carrera extends Model
                             $nombre = $this->_nombreBuscado;
                             $query->where('dir_destino','LIKE','%'.$nombre.'%')
                                     ->orWhere('dir_salida','LIKE','%'.$nombre.'%')
-                                    ->orWhere('chofers.nombre','LIKE','%'.$nombre.'%');
+                                    ->orWhere('chofers.nombre','LIKE','%'.$nombre.'%')
+                                    ->orWhere('chofers.apellido','LIKE','%'.$nombre.'%');
                     });
                 }
     }
@@ -56,7 +62,8 @@ class Carrera extends Model
                             $nombre = $this->_nombreBuscado;
                             $query->where('dir_destino','LIKE','%'.$nombre.'%')
                                     ->orWhere('dir_salida','LIKE','%'.$nombre.'%')
-                                    ->orWhere('clientes.nombre','LIKE','%'.$nombre.'%');
+                                    ->orWhere('clientes.nombre','LIKE','%'.$nombre.'%')
+                                    ->orWhere('clientes.apellido','LIKE','%'.$nombre.'%');
                     });
                 }
     }

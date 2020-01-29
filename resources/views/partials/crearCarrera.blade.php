@@ -20,7 +20,7 @@
                        <select name="select" id="inputState" class="form-control">
                             <option selected value="">Seleccionar chofer</option>
                         @foreach ($choferes as $choferItem)
-                       <option value="{{$choferItem->id}}">{{$choferItem->nombre}}</option>
+                       <option value="{{$choferItem->id}}">{{$choferItem->nombre}} {{$choferItem->apellido}}</option>
                            @endforeach
                       </select><br>
                 </div>
@@ -48,21 +48,11 @@
                  </div>
              </div>
              <!--Div para los dos nuevos campos-->
-             <div class="form-row">
+             <div class="form-row mb-3">
                 <!--Div para el campo "valor de la carrera"-->
-                 <div class="col px-3">
+                 <div class="col-6 px-3">
                      <label for="number">{{ __('Valor de la carrera') }}:</label>
                      <input id="valor" type="number" step="any" class="form-control @error('number') is-invalid @enderror" name="valCarrera" value="{{ old('Costo') }}" autocomplete="number" autofocus>
-                     @error('number')
-                     <span class="invalid-feedback" role="alert">
-                       <strong>{{ $message }}</strong>
-                     </span>
-                     @enderror
-                 </div>
-                 <!--Div para el campo "gastos de la carrera"-->
-                 <div class="col px-3">
-                     <label for="number">{{ __('Gastos') }}:</label>
-                     <input id="gasto" type="number" step="any" class="form-control @error('number') is-invalid @enderror" name="gastoCarrera" value="{{ old('Gasto') }}" autocomplete="number" autofocus>
                      @error('number')
                      <span class="invalid-feedback" role="alert">
                        <strong>{{ $message }}</strong>

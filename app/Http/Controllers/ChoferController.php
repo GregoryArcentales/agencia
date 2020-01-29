@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Carrera;
 use App\Chofer;
 use App\Http\Requests\FormularioClienteRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ChoferCarrerasExport;
 
 class ChoferController extends Controller
 {
@@ -23,8 +25,9 @@ class ChoferController extends Controller
      */
     public function index(Request $request)
     {
+
         $choferes = Chofer::buscadorChofer($request->get('buscarTexto'))->activo()->orderBy('id','desc')
-        ->paginate(5);
+        ->paginate(6);
         return view('chofer', [
             'chofer' => $choferes
             ]);
@@ -68,7 +71,7 @@ class ChoferController extends Controller
         $chofer = Chofer::findOrFail($id);
         $carreras = Carrera::join('clientes', 'cliente_id', '=', 'clientes.id')
             ->join('chofers', 'chofer_id', '=', 'chofers.id')
-            ->select('carreras.*','clientes.nombre as nombre_cliente','chofers.nombre as nombre_chofer')
+            ->select('carreras.*','clientes.nombre as nombre_cliente', 'clientes.apellido as    apellido_cliente', 'chofers.nombre as nombre_chofer', 'chofers.apellido as apellido_chofer')
             ->buscadorCarreraChofer($request->get('buscarCarrera'))
             ->idChofer($chofer->id)
             ->orderBy('id','desc')
@@ -78,6 +81,24 @@ class ChoferController extends Controller
             'carreras' => $carreras,
             'chofer' => $chofer
         ]);
+    }
+
+    public function generarPdf($id)
+    {
+        $chofer = Chofer::findOrFail($id);
+        $carreras = Carrera::join('clientes', 'cliente_id', '=', 'clientes.id')
+            ->join('chofers', 'chofer_id', '=', 'chofers.id')
+            ->select('carreras.*','clientes.nombre as nombre_cliente', 'clientes.apellido as    apellido_cliente', 'chofers.nombre as nombre_chofer', 'chofers.apellido as apellido_chofer')
+            ->idChofer($id)
+            ->orderBy('id','desc')
+            ->get();
+            $pdf = PDF::loadView('layouts.choferCarrerasPdf', compact(['carreras', 'chofer']));
+            return $pdf->stream();
+    }
+
+    public function export($id)
+    {
+        return Excel::download(new ChoferCarrerasExport($id), 'cliente-carreras.xlsx');
     }
 
     /**

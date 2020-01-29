@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::view('/', 'principal')->name('principal')->middleware('auth');
 
 Route::get('/clientes','ClienteController@index')->name('clientePrincipal');
@@ -29,13 +34,18 @@ Route::get('/carrera/{id}','CarreraController@show')->name('mostrarCarrera');
 
 Route::put('/cliente/editar/{id}', 'ClienteController@update')->name('actualizarCliente');
 Route::put('/chofer/editar/{id}', 'ChoferController@update')->name('actualizarChofer');
+Route::put('/carrera/editar/{id}', 'CarreraController@update')->name('actualizarCarrera');
+
 
 Route::put('chofer/{id}', 'ChoferController@bajaChofer')->name('eliminarChofer');
 Route::delete('clientes/{id}', 'ClienteController@destroy')->name('eliminarCliente');
 
+Route::get('cliente/carreras-pdf/{id}', 'ClienteController@generarPdf')->name('generarPdfCliente');
+Route::get('chofer/carreras-pdf/{id}', 'ChoferController@generarPdf')->name('generarPdfChofer');
+Route::get('carreras/pdf/{id}', 'CarreraController@generarPdf')->name('generarPdfCarreras');
+
+Route::get('cliente/export-excel/{id}', 'ClienteController@export')->name('clienteExportExcel');
+Route::get('chofer/export-excel/{id}', 'ChoferController@export')->name('choferExportExcel');
+Route::get('carrera/export-excel/{id}', 'CarreraController@export')->name('exportExcel');
 
 
-
-Auth::routes(['register' => false]);
-
-Route::get('/home', 'HomeController@index')->name('home');

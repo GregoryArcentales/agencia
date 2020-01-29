@@ -1,5 +1,5 @@
 <!-- Modal para editar los datos del cliente-->
-<div class="modal fade" id="EditarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="EditarChofer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <form method="POST" action="{{route('actualizarChofer', $chofer->id)}}">

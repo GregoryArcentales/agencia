@@ -36973,13 +36973,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!****************************!*\
   !*** ./resources/js/js.js ***!
   \****************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 var menuIzquierdo = document.querySelector('.menu-izquierdo');
 var tabCarrera = document.querySelector('.tabCarrera');
@@ -37000,6 +36995,11 @@ menuIzquierdo.addEventListener('click', function (e) {
     e.target.style.display = 'none';
     flechaIzq.style.display = 'block';
   }
+});
+var toggleMenu = document.querySelector('.toggle-menu');
+toggleMenu.addEventListener('click', function (e) {
+  var contenedor = document.querySelector('.pagina');
+  contenedor.classList.toggle('no-menu');
 }); //agrega el nombre del cliente en el modal de crear carrera
 
 if (tabCarrera) {
@@ -37032,7 +37032,8 @@ var mostrarDatosCarrera = function mostrarDatosCarrera(data) {
   var contenedoInfoCarrera = document.querySelector('.contenedor-info-carrera');
   data.forEach(function (nombre) {
     var total = nombre.val_carrera - nombre.gasto_carrera;
-    var templateHTML = "\n        <p class=\"datos-carrera font-weight-bold\">nombre del cliente:</p>\n        <span>".concat(nombre.nombre_cliente, "</span>\n        <p class=\"datos-carrera font-weight-bold\">nombre chofer:</p>\n        <span>").concat(nombre.nombre_chofer, "</span>\n        <p class=\"datos-carrera font-weight-bold\">direccion inicial:</p>\n        <span>").concat(nombre.dir_partida, "</span>\n        <p class=\"datos-carrera font-weight-bold\">direccion destino:</p>\n        <span>").concat(nombre.dir_destino, "</span>\n        <p class=\"datos-carrera font-weight-bold\">valor de la carrera:</p>\n        <span>$ ").concat(nombre.val_carrera, "</span>\n        <p class=\"datos-carrera font-weight-bold\">gasto de la carrera:</p>\n        <span>$ ").concat(nombre.gasto_carrera, "</span>\n        <p class=\"datos-carrera font-weight-bold\">gasto total de la carrera</p>\n        <span>$ ").concat(total, "</span>\n    ");
+    var ganancia = total.toFixed(2);
+    var templateHTML = "\n            <div class=\"col-6\">\n                <p class=\"datos-carrera font-weight-bold mb-2\">Nombre del cliente: <span class=\"font-weight-normal\">".concat(nombre.nombre_cliente, " ").concat(nombre.apellido_cliente, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Nombre del chofer: <span class=\"font-weight-normal\">").concat(nombre.nombre_chofer, " ").concat(nombre.apellido_chofer, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Direcci\xF3n de salida: <span class=\"font-weight-normal\">").concat(nombre.dir_salida, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Direcci\xF3n de destino: <span class=\"font-weight-normal\">").concat(nombre.dir_destino, "</span></p>\n            </div>\n            <div class=\"col-6\">\n                <p class=\"datos-carrera font-weight-bold mb-2\">Fecha y hora de carrera: <span class=\"font-weight-normal\">").concat(nombre.created_at, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Valor de la carrera: <span class=\"font-weight-normal\">$ ").concat(nombre.val_carrera, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Gastos: <span class=\"font-weight-normal\">$ ").concat(nombre.gasto_carrera, "</span></p>\n                <p class=\"datos-carrera font-weight-bold mb-2\">Ganancias: <span class=\"font-weight-normal\">$ ").concat(ganancia, "</span></p>\n           </div>\n    ");
     contenedoInfoCarrera.innerHTML = templateHTML;
   });
 }; //Validar campos del formmulario de carrera
@@ -37094,6 +37095,37 @@ if (btnActividades) {
       divActividades.classList.add('mostrar-actividad');
       flecha.classList.remove('flecha-giro');
     }
+  });
+} //añade los gastos de las carreras
+
+
+var btnGasto = document.querySelector('.btn-crearGasto');
+var containerGastos = document.querySelector('.container-gastos');
+
+if (btnGasto) {
+  var c = 0;
+  var acumuladorGastos = 0;
+  total = 0;
+  btnGasto.addEventListener('click', function (e) {
+    var btnSubmitGasto = document.querySelector('.btn-submit-gasto');
+    var contadorGastos = document.getElementById('contadorGastos');
+    var totalGastos = document.getElementById('totalGastos');
+    var totalGanancia = document.getElementById('totalGanancia');
+    var valorCarrera = document.querySelector('.valor-carrera').innerHTML;
+    var nombreGasto = document.getElementById('nombreGasto').value;
+    var gasto = document.getElementById('gasto').value;
+    var div = document.createElement('div');
+    div.classList = 'gasto d-flex align-items-center mb-3';
+    var template = "\n        <label for=\"\" class=\"col-3\">".concat(nombreGasto, ":</label>\n        <input type=\"hidden\" name=\"nombreGasto").concat(c, "\" value=\"").concat(nombreGasto, "\">\n        <input class=\"form-control col-9 col-md-7 inputGasto\" type=\"text mb-2\" name=\"inputGasto").concat(c, "\" placeholder=\"\" value=\"").concat(gasto, "\" readonly>\n        ");
+    div.innerHTML = template;
+    containerGastos.insertAdjacentElement('beforeend', div);
+    btnSubmitGasto.removeAttribute('disabled');
+    acumuladorGastos += parseFloat(gasto, 10);
+    total = parseFloat(valorCarrera, 10) - acumuladorGastos;
+    totalGastos.value = acumuladorGastos.toFixed(2);
+    totalGanancia.value = total;
+    contadorGastos.value = c;
+    c++;
   });
 }
 

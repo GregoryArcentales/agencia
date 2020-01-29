@@ -1,5 +1,3 @@
-import Axios from "axios";
-
 const menuIzquierdo = document.querySelector('.menu-izquierdo');
 const tabCarrera = document.querySelector('.tabCarrera')
 const clienteNuevaCarrera = document.querySelector('.clienteNuevaCarrera')
@@ -23,6 +21,13 @@ menuIzquierdo.addEventListener('click', (e)  => {
             flechaIzq.style.display = 'block';
        }
 });
+
+const toggleMenu = document.querySelector('.toggle-menu');
+toggleMenu.addEventListener('click', e => {
+    const contenedor = document.querySelector('.pagina')
+    contenedor.classList.toggle('no-menu')
+})
+
 //agrega el nombre del cliente en el modal de crear carrera
 if (tabCarrera) {
     tabCarrera.addEventListener('click', e =>{
@@ -54,21 +59,20 @@ const mostrarDatosCarrera = data => {
     const contenedoInfoCarrera = document.querySelector('.contenedor-info-carrera')
     data.forEach(nombre => {
          const total = nombre.val_carrera - nombre.gasto_carrera
+         const ganancia = total.toFixed(2)
         const templateHTML = `
-        <p class="datos-carrera font-weight-bold">nombre del cliente:</p>
-        <span>${nombre.nombre_cliente}</span>
-        <p class="datos-carrera font-weight-bold">nombre chofer:</p>
-        <span>${nombre.nombre_chofer}</span>
-        <p class="datos-carrera font-weight-bold">direccion inicial:</p>
-        <span>${nombre.dir_partida}</span>
-        <p class="datos-carrera font-weight-bold">direccion destino:</p>
-        <span>${nombre.dir_destino}</span>
-        <p class="datos-carrera font-weight-bold">valor de la carrera:</p>
-        <span>$ ${nombre.val_carrera}</span>
-        <p class="datos-carrera font-weight-bold">gasto de la carrera:</p>
-        <span>$ ${nombre.gasto_carrera}</span>
-        <p class="datos-carrera font-weight-bold">gasto total de la carrera</p>
-        <span>$ ${total}</span>
+            <div class="col-6">
+                <p class="datos-carrera font-weight-bold mb-2">Nombre del cliente: <span class="font-weight-normal">${nombre.nombre_cliente} ${nombre.apellido_cliente}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Nombre del chofer: <span class="font-weight-normal">${nombre.nombre_chofer} ${nombre.apellido_chofer}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Dirección de salida: <span class="font-weight-normal">${nombre.dir_salida}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Dirección de destino: <span class="font-weight-normal">${nombre.dir_destino}</span></p>
+            </div>
+            <div class="col-6">
+                <p class="datos-carrera font-weight-bold mb-2">Fecha y hora de carrera: <span class="font-weight-normal">${nombre.created_at}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Valor de la carrera: <span class="font-weight-normal">$ ${nombre.val_carrera}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Gastos: <span class="font-weight-normal">$ ${nombre.gasto_carrera}</span></p>
+                <p class="datos-carrera font-weight-bold mb-2">Ganancias: <span class="font-weight-normal">$ ${ganancia}</span></p>
+           </div>
     `
         contenedoInfoCarrera.innerHTML=templateHTML
       });
@@ -131,6 +135,45 @@ if (btnActividades) {
         }
     })
 }
+
+//añade los gastos de las carreras
+const btnGasto = document.querySelector('.btn-crearGasto')
+const containerGastos = document.querySelector('.container-gastos')
+if (btnGasto) {
+    let c=0
+    let acumuladorGastos = 0
+    total = 0
+    btnGasto.addEventListener('click', e => {
+        const btnSubmitGasto = document.querySelector('.btn-submit-gasto')
+        const contadorGastos = document.getElementById('contadorGastos')
+        const totalGastos = document.getElementById('totalGastos')
+        const totalGanancia = document.getElementById('totalGanancia')
+        const valorCarrera = document.querySelector('.valor-carrera').innerHTML
+        const nombreGasto = document.getElementById('nombreGasto').value
+        const gasto = document.getElementById('gasto').value
+
+        const div = document.createElement('div')
+        div.classList = 'gasto d-flex align-items-center mb-3'
+        const template = `
+        <label for="" class="col-3">${nombreGasto}:</label>
+        <input type="hidden" name="nombreGasto${c}" value="${nombreGasto}">
+        <input class="form-control col-9 col-md-7 inputGasto" type="text mb-2" name="inputGasto${c}" placeholder="" value="${gasto}" readonly>
+        `
+        div.innerHTML=template
+        containerGastos.insertAdjacentElement('beforeend', div)
+        btnSubmitGasto.removeAttribute('disabled')
+
+        acumuladorGastos += parseFloat(gasto, 10)
+        total = (parseFloat(valorCarrera,10)) - acumuladorGastos
+
+        totalGastos.value = acumuladorGastos.toFixed(2)
+        totalGanancia.value = total
+        contadorGastos.value = c
+        c++
+    })
+}
+
+
 
 
 

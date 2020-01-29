@@ -13,15 +13,20 @@
 <body>
     <div class="pagina d-flex flex-column">
             <header class="header d-flex">
-                <div class="nombre-sitio p-2">
+                <div class="nombre-sitio p-2 d-none d-md-block">
                     <h1 class="d-none d-sm-block">AgenciaTaxis</h1>
                     <h1 class="d-sm-none">AT</h1>
                 </div>
                 <div class="barra p-0 flex-grow-1">
                     <div class="contenedor-menus d-flex justify-content-between align-items-center h-100">
                         <div class="menu-izquierdo pl-3 d-flex align-items-center">
-                            <i class="fas fa-arrow-left"></i>
-                            <i class="fas fa-arrow-right"></i>
+                            <div class="d-none d-md-block">
+                                <i class="fas fa-arrow-left"></i>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="toggle-menu d-block d-md-none">
+                                <i class="fas fa-bars"></i>
+                            </div>
                             <div>
                                 <h2 class="mb-0 pl-5 name">{{name()}}</h2>
                             </div>
@@ -34,13 +39,13 @@
                                             <i class="fas fa-comment-alt pr-1"></i>
                                             Mensajes
                                         </a>
-                                </div> --}}
+                                </div>
                                 <div class="mensajes caja h-100 d-flex align-items-center p-3">
                                         <a href="#">
                                             <i class="fas fa-bell pr-1"></i>
                                             Alertas
                                         </a>
-                                </div>
+                                </div> --}}
                                 <div class="cerrar caja h-100 d-flex align-items-center p-3">
                                     <a href="{{ route('logout') }}" class="btn-logout" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -55,11 +60,12 @@
                     </div>
                 </div>
             </header>
-            <main class="contenedor-principal flex-grow-1 d-flex align-items-strech">
-                <div class="sidebar p-4">
+            <main class="h-100 contenedor-principal flex-grow-1 d-flex align-items-strech">
+                <div class="sidebar p-4  flex-grow-1">
                     <div class="usuario d-flex justify-content-around align-items-center">
                         <i class="fas fa-user-circle"></i>
-                        <p class="font-weight-bold mb-0">Bienvenid@: <span class="d-block font-weight-normal">Admin</span></p>
+                    <p class="font-weight-bold mb-0">Bienvenid@: <span class="d-block font-weight-normal">
+                        {{auth()->user()->name}}</span></p>
                     </div>
                     <div class="menu-admin mt-4 pt-2">
                         <h2 class="text-center p-2">Menú de Administración</h2>
@@ -105,7 +111,7 @@
                                 </ul>
                             </li>
                             <li class="py-2 px-3">
-                                <a href="" class="">
+                                <a href="#" class="">
                                     <i class="fas fa-taxi mx-1"></i>
                                     Carreras
                                 </a>

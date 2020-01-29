@@ -20,7 +20,8 @@ class CreateCarrerasTable extends Migration
             $table->string('dir_destino');
             $table->string('dir_salida');
             $table->double('val_carrera'); /*Se crea el campo para el valor de la carrera*/
-            $table->double('gasto_carrera'); /*Se crea el campo para el gasto de la carrera*/
+            $table->double('gasto_carrera')->nullable();
+            $table->double('ganancia_carrera')->nullable();
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes');

@@ -8,5 +8,11 @@ function name()
         return 'Choferes';
     }elseif (request()->routeIs('carreraPrincipal')) {
         return 'Carreras';
+    }elseif (request()->routeIs('mostrarCliente')) {
+        return 'Cliente';
+    }elseif(request()->routeIs('mostrarChofer')){
+        return 'Chofer';
+    }elseif(request()->routeIs('mostrarCarrera')){
+        return 'Carrera';
     }
 }
